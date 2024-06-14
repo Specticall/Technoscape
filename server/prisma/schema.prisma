@@ -23,6 +23,7 @@ datasource db {
 model User{
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   email      String   @unique
+  password   String
   name       String?
   posts      Company[]
   statistics Statistics?
@@ -37,7 +38,7 @@ model Company {
   requests RequestQuery[]
   responses ResponseQuery[]
 
-  starred Boolean
+  starred Boolean 
   archived Boolean
 }
 
