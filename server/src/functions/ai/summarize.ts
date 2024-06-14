@@ -42,7 +42,7 @@ export async function summarize({ input }: SummarizeParams) {
   }
 }
 
-summarize({
-  input:
-    "Saya seseorang yang suka makan nasi. Saya tidak suka makan ayam. Saya tidak mau makan daging lain. Saya suka sayur.",
-}).then((res) => console.log(res));
+// summarize({
+//   input:
+//     "Saya seseorang yang suka makan nasi. Saya tidak suka makan ayam. Saya tidak mau makan daging lain. Saya suka sayur.",
+// }).then((res) => console.log(res));

@@ -16,9 +16,13 @@ export default function CompanyCard({ highlighted, name, description }: Props) {
     >
       <div className="w-10 aspect-square bg-slate-500 rounded-full row-span-2"></div>
       <div>
-        <h3>Company Name</h3>
+        <h3>{name}</h3>
       </div>
-      <p className="text-gray-400">Lorem ipsum dolor sit...</p>
+      <p className="text-gray-400">
+        {description.length >= 20
+          ? description.slice(0, 20) + "..."
+          : description}
+      </p>
     </article>
   );
 }

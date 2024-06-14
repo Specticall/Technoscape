@@ -42,7 +42,7 @@ export async function sentiment({ input }: sentimentParams) {
   }
 }
 
-sentiment({
-  input:
-    "Hi, it looks like your server are having issues right now, my clients aren't able to access any of your products through our app, I would like to know this is true or perhaps there might be something wrong on our side",
-}).then((res) => console.log(res));
+// sentiment({
+//   input:
+//     "Hi, it looks like your server are having issues right now, my clients aren't able to access any of your products through our app, I would like to know this is true or perhaps there might be something wrong on our side",
+// }).then((res) => console.log(res));

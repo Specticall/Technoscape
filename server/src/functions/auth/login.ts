@@ -9,22 +9,22 @@ const prisma = new PrismaClient();
 export const login: RequestHandler = async (request, response, next) => {
   try {
     const id = request.body.id;
-    const { username, password } = request.body;
+    const { email, password } = request.body;
 
     const user = await prisma.user.findUnique({
       where: {
         id,
-        name: username,
+        email,
       },
     });
 
-    if (!user) throw new Error("username not provided");
+    if (!user) throw new Error("email not provided");
 
     const passMatch = await bcrypt.compare(password, user.password);
 
     if (!passMatch) throw new Error("invalid credintials");
 
-    const token = jwt.sign({ username }, process.env.JWT_SECRET as string);
+    const token = jwt.sign({ email }, process.env.JWT_SECRET as string);
 
     response.status(200).send({
       status: "success69420",

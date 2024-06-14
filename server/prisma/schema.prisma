@@ -32,7 +32,7 @@ model User{
 // Company
 model Company {
   id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  name     String @unique
+  name     String    @unique
   author   User      @relation(fields: [userId], references: [id])
   userId   String    @db.ObjectId
   requests RequestQuery[]
@@ -48,6 +48,7 @@ model RequestQuery {
   comment   String
   company   Company @relation(fields: [companyId], references: [id])
   companyId String  @db.ObjectId
+  dateCreated DateTime
 }
 
 // response query
@@ -59,7 +60,7 @@ model ResponseQuery {
   urgency   Int // 1 - 10
   tone      Int
   topic     Topics
-  
+  dateCreated DateTime
 }
 
 

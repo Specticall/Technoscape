@@ -48,10 +48,10 @@ export async function translate({ input, translateTo }: TranslateParams) {
 //   translateTo: "english",
 // });
 
-translate({
-  input:
-    "Nama saya Joseph, saya ingin menang dalam lomba ini kalau tdk menang, nanti binus kita bakar, terimakasih",
-  translateTo: "english",
-}).then((res) => console.log(res));
+// translate({
+//   input:
+//     "Nama saya Joseph, saya ingin menang dalam lomba ini kalau tdk menang, nanti binus kita bakar, terimakasih",
+//   translateTo: "english",
+// }).then((res) => console.log(res));
 
 // console.log(translation);

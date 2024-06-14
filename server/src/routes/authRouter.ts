@@ -4,6 +4,6 @@ import { protect } from "../functions/auth/protect";
 
 const router = Router();
 
-router.post("/login", protect, login);
+router.post("/login", login);
 
 export default router;

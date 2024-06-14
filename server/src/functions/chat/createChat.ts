@@ -16,6 +16,7 @@ export const createChat: RequestHandler = async (request, response, next) => {
       data: {
         comment: reqMessage,
         companyId,
+        dateCreated: new Date(),
       },
     });
     if (!userRequest)
@@ -25,26 +26,38 @@ export const createChat: RequestHandler = async (request, response, next) => {
     const aiResponse = (await createResponse({ input: reqMessage }))
       ?.completeResponse;
 
+    console.log(aiResponse);
+
     if (!aiResponse)
       throw new AppError("Somewrong with our AI processing service", 500);
 
     // 4. hasil dari ai dibkin response query
     const {
       stats: { sentiment, topic, urgency },
-      response,
+      response: responseAI,
     } = aiResponse;
 
-    const userResponse = await prisma.responseQuery.create({
+    await prisma.responseQuery.create({
       data: {
-        message: response,
+        message: responseAI,
+        companyId,
+        urgency: typeof urgency === "string" ? parseFloat(urgency) : urgency,
+        tone: typeof sentiment === "string" ? parseFloat(sentiment) : sentiment,
+        topic,
+        dateCreated: new Date(),
+      },
+    });
+    // 5. dikirim request + response query
+    response.status(200).send({
+      status: "success",
+      data: {
+        message: responseAI,
         companyId,
         urgency,
         tone: sentiment,
         topic,
       },
     });
-    // 5. dikirim request + response query
-    return;
   } catch (error) {
     next(error);
   }

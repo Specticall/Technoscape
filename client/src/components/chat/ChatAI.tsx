@@ -1,3 +1,4 @@
+import useChatMutation from "../../service/useChatMutation";
 import Icons from "../Icons";
 import Button from "../general.tsx/Button";
 import { Icon } from "@iconify/react";
@@ -5,9 +6,10 @@ import { Icon } from "@iconify/react";
 type Params = {
   message: string;
   topic: string;
+  userMessage: string;
 };
 
-export default function ChatAI({ message }: Params) {
+export default function ChatAI({ message, topic, userMessage }: Params) {
   return (
     <article className="grid grid-cols-[auto_1fr] gap-x-4 mr-16 max-w-[80rem]">
       <div className="[&>svg]:w-[20px] row-span-2">
@@ -19,14 +21,9 @@ export default function ChatAI({ message }: Params) {
       <div className="bg-accent p-6 rounded-xl rounded-bl-sm text-gray-100 mt-2">
         <p className="mb-4 gap-4">
           <span className="font-semibold">Topic</span>
-          <span className="ml-2 font-[400]">Products</span>
+          <span className="ml-2 font-[400]">{topic}</span>
         </p>
-        <p className="font-[400] text-gray-100 leading-[175%]">
-          Lorem ipsum dolor sit amet consectetur. Viverra cursus imperdiet
-          praesent ornare amet neque cum tellus. Neque parturient nunc sit proin
-          porttitor. Blandit malesuada ac egestas magnis diam pulvinar. Eleifend
-          ultrices semper tortor iaculis. Proin blandit dignissim ac bibendum.
-        </p>
+        <p className="font-[400] text-gray-100 leading-[175%]">{message}</p>
         <div className="mt-6 flex justify-between items-center">
           <Button
             variant="secondary"
