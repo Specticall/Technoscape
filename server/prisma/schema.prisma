@@ -15,3 +15,83 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+
+
+// user untuk kita sebagai admin
+
+model User{
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  email      String   @unique
+  name       String?
+  posts      Company[]
+  statistics Statistics?
+}
+
+// Company
+model Company {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String @unique
+  author   User      @relation(fields: [userId], references: [id])
+  userId   String    @db.ObjectId
+  requests RequestQuery[]
+  responses ResponseQuery[]
+
+  starred Boolean
+  archived Boolean
+}
+
+// request query
+model RequestQuery {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  comment   String
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @db.ObjectId
+}
+
+// response query
+model ResponseQuery {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  message   String
+  company   Company   @relation(fields: [companyId], references: [id])
+  companyId String @db.ObjectId
+  urgency   Int // 1 - 10
+  tone      Int
+  topic     Topics
+  
+}
+
+
+
+// VVVVVVVVVVVVVVVVV
+// Jumlah Keluhan
+
+// Tingkat penyelesaian
+
+// Faktor penyebab utama (teknis, layanan, dkk)
+
+// Most used language
+
+model Statistics {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  user              User   @relation(fields: [userId], references: [id])
+  userId            String @unique @db.ObjectId
+  totalComplaints   Int
+  commonComplaints  Topics
+}
+
+enum Topics {
+  Services
+  Productsp
+  Technical
+  Billing
+  Complaints
+  Suggestions
+}
+
+model Languages {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  language String
+}
+
+
