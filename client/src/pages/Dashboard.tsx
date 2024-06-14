@@ -1,11 +1,13 @@
 import Top from "../components/Top";
-import CompanyList from "../components/dashboard/CompanyList";
+import Chat from "../components/chat/Chat";
+import Aside from "../components/dashboard/Aside";
 
 export default function Dashboard() {
   return (
-    <div className="grid grid-cols-[1fr_2fr]">
-      <CompanyList />
+    <div className="grid grid-cols-[2fr_5fr] grid-rows-[auto_1fr] min-h-full">
+      <Aside />
       <Top />
+      <Chat />
     </div>
   );
 }

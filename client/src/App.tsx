@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AppLayout from "./pages/AppLayout";
+import Statistics from "./pages/Statistics";
 
 const queryClient = new QueryClient();
 

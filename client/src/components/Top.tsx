@@ -17,7 +17,7 @@ const options = [
 
 export default function Top() {
   return (
-    <div className="flex items-center justify-center gap-4 px-8 py-4 border-b border-slate-200 col-span-2">
+    <div className="flex items-center justify-center gap-4 px-8 py-4 border-b border-slate-200">
       <div className="w-8 aspect-square bg-gray-400 rounded-full"></div>
       <p className="mr-6">Name</p>
       <ul className="flex-1 flex items-center gap-6">

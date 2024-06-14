@@ -54,7 +54,7 @@ model RequestQuery {
 model ResponseQuery {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   message   String
-  company   Company   @relation(fields: [companyId], references: [id])
+  company   Company @relation(fields: [companyId], references: [id])
   companyId String @db.ObjectId
   urgency   Int // 1 - 10
   tone      Int

@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Icons from "./Icons";
 import { cn } from "../utils/helper";
+import { Icon } from "lucide-react";
 
 const navbarList = [
   {

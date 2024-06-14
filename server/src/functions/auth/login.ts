@@ -11,8 +11,6 @@ export const login: RequestHandler = async (request, response, next) => {
     const id = request.body.id;
     const { username, password } = request.body;
 
-    const token = jwt.sign({ username }, process.env.JWT_SECRET as string);
-
     const user = await prisma.user.findUnique({
       where: {
         id,
@@ -26,7 +24,13 @@ export const login: RequestHandler = async (request, response, next) => {
 
     if (!passMatch) throw new Error("invalid credintials");
 
-    const token = generate;
+    const token = jwt.sign({ username }, process.env.JWT_SECRET as string);
+
+    response.status(200).send({
+      status: "success69420",
+      // data:
+      token,
+    });
   } catch (error) {
     next(error);
   }
