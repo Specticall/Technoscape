@@ -4,11 +4,12 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
-import { BASE_URL, companyId, token, userId } from "../utils/config";
+import { BASE_URL, token, userId } from "../utils/config";
 import useChatQuery from "./useChatQuery";
 import { ChatResponse, RequestChat } from "../utils/types";
+import { useCompany } from "../context/CompanyContext";
 
-const mutationFn = (message: string) => {
+const mutationFn = (companyId: string) => (message: string) => {
   return axios.post(
     `${BASE_URL}/chat`,
     {
@@ -25,17 +26,25 @@ const mutationFn = (message: string) => {
 
 export default function useChatMutation() {
   const queryClient = useQueryClient();
+  const { selectedCompany } = useCompany();
 
   const chatMutation = useMutation({
-    mutationFn,
+    mutationFn: mutationFn(selectedCompany?.id || ""),
     onMutate: async (message: string) => {
       console.log("SENDING...");
       // Cancel any outgoing refetches
       // (so they don't overwrite our optimistic update)
-      await queryClient.cancelQueries({ queryKey: ["chat", userId] });
+      await queryClient.cancelQueries({
+        queryKey: ["chat", userId, selectedCompany?.id],
+      });
 
       // Snapshot the previous value
-      const previousMessage = queryClient.getQueryData(["chat", userId]);
+      const previousMessage = queryClient.getQueryData([
+        "chat",
+        userId,
+
+        selectedCompany?.id,
+      ]);
 
       const optimisticChat: RequestChat = {
         message,
@@ -45,7 +54,7 @@ export default function useChatMutation() {
       };
       // Optimistically update to the new value
       queryClient.setQueryData(
-        ["chat", userId],
+        ["chat", userId, selectedCompany?.id],
         (current: AxiosResponse<ChatResponse, unknown>) => {
           const currentData = current?.data ? current.data?.data : [];
           return {
@@ -61,11 +70,19 @@ export default function useChatMutation() {
     },
     onError: (err, newTodo, context) => {
       console.log("error", err);
-      queryClient.setQueryData(["chat", userId], context?.previousMessage);
+      queryClient.setQueryData([
+        "chat",
+        userId,
+
+        selectedCompany?.id,
+        context?.previousMessage,
+      ]);
     },
     onSuccess: (data) => {
       console.log("SUCCESS");
-      queryClient.invalidateQueries({ queryKey: ["chat", userId] });
+      queryClient.invalidateQueries({
+        queryKey: ["chat", userId, selectedCompany?.id],
+      });
     },
   });
 

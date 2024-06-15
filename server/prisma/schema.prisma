@@ -85,7 +85,7 @@ model Statistics {
 
 enum Topics {
   Services
-  Productsp
+  Products
   Technical
   Billing
   Complaints

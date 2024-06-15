@@ -10,14 +10,14 @@ export type ErrorResponse = {
   message: string;
 };
 export type RequestChat = {
-  id: number;
+  id: string;
   message: string;
   companyId: string;
   dateCreated: string;
 };
 
 export type ResponseChat = {
-  id: number;
+  id: string;
   message: string;
   companyId: string;
   dateCreated: string;

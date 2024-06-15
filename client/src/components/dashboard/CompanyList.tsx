@@ -1,11 +1,11 @@
+import { useCompany } from "../../context/CompanyContext";
 import useCompanyQuery from "../../service/useCompanyQuery";
 import { ScrollArea } from "../general.tsx/ScrollArea";
 import CompanyCard from "./CompanyCard";
 
 export default function CompanyList() {
   const { companyData } = useCompanyQuery();
-
-  console.log(companyData);
+  const { selectedCompany, setSelectedCompany } = useCompany();
 
   return (
     <div className="flex-1">
@@ -14,27 +14,15 @@ export default function CompanyList() {
           {companyData?.map((company) => {
             return (
               <CompanyCard
+                highlighted={
+                  selectedCompany && selectedCompany.id === company.id
+                }
+                onClick={() => setSelectedCompany(company)}
                 name={company.name}
                 description={"Company description here..."}
               />
             );
           })}
-          {/* <CompanyCard highlighted />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard />
-          <CompanyCard /> */}
         </div>
       </ScrollArea>
     </div>

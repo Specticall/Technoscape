@@ -6,9 +6,15 @@ type Props = {
   description: string;
 };
 
-export default function CompanyCard({ highlighted, name, description }: Props) {
+export default function CompanyCard({
+  highlighted,
+  name,
+  description,
+  ...props
+}: Props & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <article
+      {...props}
       className={cn(
         "p-4 gap-x-4 grid grid-cols-[auto_1fr] rounded-md",
         highlighted && "bg-slate-100"
