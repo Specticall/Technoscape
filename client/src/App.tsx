@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
 import AppLayout from "./pages/AppLayout";
 import ContextPool from "./components/general.tsx/ContextPool";
 
@@ -35,7 +34,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
     ],
-  },
+  }
 ]);
 
 export default function App() {
