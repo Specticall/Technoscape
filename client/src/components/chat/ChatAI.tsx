@@ -3,6 +3,7 @@ import Icons from "../Icons";
 import Button from "../general.tsx/Button";
 import { Icon } from "@iconify/react";
 import LoadingSpinner from "../general.tsx/LoadingSpinner";
+import { usePopup } from "../general.tsx/Popup";
 
 type Params = {
   message: string;
@@ -20,6 +21,17 @@ export default function ChatAI({
   id,
 }: Params) {
   const [isLoading, setIsLoading] = useState(false);
+  const { notify } = usePopup();
+
+  const handleCopy = async () => {
+    try {
+      if (!message) return;
+      await navigator.clipboard.writeText(message);
+      notify("Copied to clipboard");
+    } catch (err) {
+      notify("Fail copying to clipboard");
+    }
+  };
 
   return (
     <article className="grid grid-cols-[auto_1fr] gap-x-4 mr-16 max-w-[80rem]">
@@ -61,7 +73,10 @@ export default function ChatAI({
               </Button>
             )}
           </div>
-          <i className="bx bx-copy text-2xl hover:opacity-75 transition-all duration-200 cursor-pointer self-end"></i>
+          <i
+            onClick={handleCopy}
+            className="bx bx-copy text-2xl hover:opacity-75 transition-all duration-200 cursor-pointer self-end"
+          ></i>
         </div>
       </div>
     </article>

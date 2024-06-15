@@ -30,8 +30,8 @@ export default function Top() {
         })}
       </ul>
       <div className="flex gap-3 items-center justify-center">
-        <div className="[&>svg]:w-[26px]">
-          <Icons icon="star" />
+        <div className="[&>svg]:w-[36px]">
+          <Icons icon="logo" />
         </div>
         <p>Powered by AI Copilot</p>
       </div>

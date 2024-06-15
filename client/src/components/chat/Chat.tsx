@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useChatQuery from "../../service/useChatQuery";
 import { ScrollArea } from "../general.tsx/ScrollArea";
 import ChatAI from "./ChatAI";
@@ -7,6 +7,9 @@ import ChatUser from "./ChatUser";
 import { RequestChat, ResponseChat } from "../../utils/types";
 import useScrollTo from "../../hooks/useScrollTo";
 import useRegenerateMutation from "../../service/useRegenerateMutation";
+import ChatStatistics from "./ChatStatistics";
+import LoadingSpinner from "../general.tsx/LoadingSpinner";
+import useChatMutation from "../../service/useChatMutation";
 
 function isAIChat(
   chatInput: ResponseChat | RequestChat
@@ -16,7 +19,7 @@ function isAIChat(
 
 export default function Chat() {
   const { chatData } = useChatQuery();
-  // const chatMutation = useChatMutation();
+  const [isLoading, setIsLoading] = useState(false);
   const regenerateMutation = useRegenerateMutation();
   const scrollAreaRef = useRef<null | HTMLDivElement>(null);
 
@@ -54,23 +57,46 @@ export default function Chat() {
             if (isAIChat(chat)) {
               const canRegenerate =
                 i === chatLength - 1 || i === chatLength - 2;
+
               return (
-                <ChatAI
-                  key={`${chat.id}-${chat.dateCreated}`}
-                  onRegenerate={handleRegenerate}
-                  canRegenerate={canRegenerate}
-                  message={chat.message}
-                  topic={chat.topic}
-                  id={chat.id}
-                />
+                <>
+                  <ChatStatistics
+                    sentiment={+chat.tone}
+                    urgency={+chat.urgency}
+                  />
+                  <ChatAI
+                    key={`${chat.id}-${chat.dateCreated}`}
+                    onRegenerate={handleRegenerate}
+                    canRegenerate={canRegenerate}
+                    message={chat.message}
+                    topic={chat.topic}
+                    id={chat.id}
+                  />
+                </>
               );
             }
 
             return <ChatUser message={chat.message} />;
           })}
+          {isLoading && (
+            <div className="flex gap-2 items-center justify-center w-full mb-6">
+              <div>
+                <LoadingSpinner size={"sm"} />
+              </div>
+              <p>Generating Response...</p>
+            </div>
+          )}
         </ScrollArea>
       </div>
-      <ChatInput onSendChat={scrollToBottom} />
+      <ChatInput
+        onSendChat={() => {
+          scrollToBottom();
+          setIsLoading(true);
+        }}
+        onSuccess={() => {
+          setIsLoading(false);
+        }}
+      />
     </div>
   );
 }

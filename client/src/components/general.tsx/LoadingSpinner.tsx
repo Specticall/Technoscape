@@ -2,7 +2,7 @@ import { VariantProps, cva } from "class-variance-authority";
 
 const styles = cva(
   //////// Your stlyes goes here ///////
-  "aspect-square border-white border-b-transparent rounded-full inline-block box-border animate-spin",
+  "aspect-square border-black border-b-transparent rounded-full inline-block box-border animate-spin",
   //////// Size Variants ///////
   {
     variants: {

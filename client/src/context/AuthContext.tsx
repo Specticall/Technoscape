@@ -1,14 +1,38 @@
-import { ReactNode, createContext, useContext } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 type TAuthContextValues = {
   token: string;
-  setToken: string;
+  setToken: React.Dispatch<React.SetStateAction<string>>;
+  handleSetToken: (token: string) => void;
 };
 
 const AuthContext = createContext<TAuthContextValues | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>;
+  const [token, setToken] = useState("");
+
+  const handleSetToken = (token: string) => {
+    localStorage.setItem("token", token);
+    setToken(token);
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    setToken(token);
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ token, setToken, handleSetToken }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

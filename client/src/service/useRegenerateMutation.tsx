@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { BASE_URL, token, userId } from "../utils/config";
 import { useCompany } from "../context/CompanyContext";
+import { useAuth } from "../context/AuthContext";
 
 const mutationFn = ({
   requestId,
@@ -26,7 +27,7 @@ const mutationFn = ({
 
 export default function useRegenerateMutation() {
   const queryClient = useQueryClient();
-  const { selectedCompany } = useCompany();
+  const { token } = useAuth();
 
   const regenerateMutation = useMutation({
     mutationFn,

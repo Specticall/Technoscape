@@ -5,14 +5,17 @@ import useChatMutation from "../../service/useChatMutation";
 
 type Props = {
   onSendChat: (value: string) => void;
+  onSuccess: () => void;
 };
 
-export default function ChatInput({ onSendChat }: Props) {
+export default function ChatInput({ onSendChat, onSuccess }: Props) {
   const [value, setValue] = useState("");
-  const chatMutation = useChatMutation();
 
+  const chatMutation = useChatMutation();
   const handleSendChat = () => {
-    chatMutation.mutate(value);
+    chatMutation.mutate(value, {
+      onSuccess,
+    });
     onSendChat(value);
     setValue("");
   };

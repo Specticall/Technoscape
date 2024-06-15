@@ -29,8 +29,8 @@ export default function Navbar() {
   return (
     <nav className="fixed left-0 w-[4rem] bg-gray-200 top-0 bottom-0">
       <ul className="grid gap-3 justify-center w-full">
-        <div className="pt-8 w-full flex items-center justify-center mb-2">
-          <Icons icon="star" />
+        <div className="pt-8 scale-[75%] w-full flex items-center justify-center">
+          <Icons icon="logo" />
         </div>
         {navbarList.map((navbar) => {
           const isSelected = pathname === navbar.route;

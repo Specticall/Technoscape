@@ -7,6 +7,7 @@ import {
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import AppLayout from "./pages/AppLayout";
+import Statistics from "./pages/Statistics";
 import ContextPool from "./components/general.tsx/ContextPool";
 
 const queryClient = new QueryClient();
@@ -33,8 +34,12 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login />,
       },
+      {
+        path: "/statistics",
+        element: <Statistics />,
+      },
     ],
-  }
+  },
 ]);
 
 export default function App() {

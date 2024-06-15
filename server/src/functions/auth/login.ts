@@ -27,8 +27,7 @@ export const login: RequestHandler = async (request, response, next) => {
     const token = jwt.sign({ email }, process.env.JWT_SECRET as string);
 
     response.status(200).send({
-      status: "success69420",
-      // data:
+      status: "success",
       token,
     });
   } catch (error) {

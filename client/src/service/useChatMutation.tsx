@@ -31,7 +31,6 @@ export default function useChatMutation() {
   const chatMutation = useMutation({
     mutationFn: mutationFn(selectedCompany?.id || ""),
     onMutate: async (message: string) => {
-      console.log("SENDING...");
       // Cancel any outgoing refetches
       // (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries({
@@ -50,7 +49,7 @@ export default function useChatMutation() {
         message,
         dateCreated: new Date().toDateString(),
         companyId: Math.random().toString(),
-        id: Math.random(),
+        id: Math.random().toString(),
       };
       // Optimistically update to the new value
       queryClient.setQueryData(

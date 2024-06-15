@@ -19,6 +19,14 @@ const createCompany =
     );
   };
 
+const deleteCompany = ({ companyId }: { companyId: string }) => {
+  return axios.delete(`${BASE_URL}/company?id=${companyId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export default function useCompanyMutation() {
   const queryClient = useQueryClient();
 
@@ -33,5 +41,13 @@ export default function useCompanyMutation() {
     },
   });
 
-  return { createMutation };
+  const deleteMutation = useMutation({
+    mutationFn: deleteCompany,
+    onError: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["company", userId] });
+    },
+  });
+
+  return { createMutation, deleteMutation };
 }

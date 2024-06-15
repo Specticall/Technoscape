@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export const delCompany: RequestHandler = async (request, response, next) => {
   try {
-    const companyId = request.body.id;
+    const companyId = request.query.companyId as string;
     if (!companyId) {
       throw new AppError("Company ID required", 402);
     }
