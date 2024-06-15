@@ -1,4 +1,3 @@
-import useChatMutation from "../../service/useChatMutation";
 import Icons from "../Icons";
 import Button from "../general.tsx/Button";
 import { Icon } from "@iconify/react";
@@ -6,10 +5,9 @@ import { Icon } from "@iconify/react";
 type Params = {
   message: string;
   topic: string;
-  userMessage: string;
 };
 
-export default function ChatAI({ message, topic, userMessage }: Params) {
+export default function ChatAI({ message, topic }: Params) {
   return (
     <article className="grid grid-cols-[auto_1fr] gap-x-4 mr-16 max-w-[80rem]">
       <div className="[&>svg]:w-[20px] row-span-2">

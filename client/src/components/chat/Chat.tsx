@@ -4,10 +4,18 @@ import { ScrollArea } from "../general.tsx/ScrollArea";
 import ChatAI from "./ChatAI";
 import ChatInput from "./ChatInput";
 import ChatUser from "./ChatUser";
+import { RequestChat, ResponseChat } from "../../utils/types";
+
+function isAIChat(
+  chatInput: ResponseChat | RequestChat
+): chatInput is ResponseChat {
+  return "tone" in chatInput;
+}
 
 export default function Chat() {
   const { chatData } = useChatQuery();
-  const scrollAreaRef = useRef<null | HTMLElement>(null);
+
+  const scrollAreaRef = useRef<null | HTMLDivElement>(null);
 
   const scrollToBottom = useCallback(() => {
     if (!scrollAreaRef.current) return;
@@ -34,17 +42,12 @@ export default function Chat() {
           ref={scrollAreaRef}
         >
           {chatData?.map((chat) => {
-            if (chat?.tone) {
+            if (isAIChat(chat)) {
               return <ChatAI message={chat.message} topic={chat.topic} />;
             }
 
-            return <ChatUser message={chat.comment} />;
+            return <ChatUser message={chat.message} />;
           })}
-          {/* <ChatAI />
-          <ChatUser />
-          <ChatUser />
-          <ChatUser />
-          <ChatUser /> */}
         </ScrollArea>
       </div>
       <ChatInput onSendChat={scrollToBottom} />
