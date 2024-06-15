@@ -83,6 +83,8 @@ model Statistics {
   commonComplaints  Topics
 }
 
+
+
 enum Topics {
   Services
   Products
