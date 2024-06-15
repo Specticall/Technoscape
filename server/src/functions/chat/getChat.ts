@@ -8,7 +8,6 @@ export const getChat: RequestHandler = async (request, response, next) => {
     const userId = request.query.userId as string | undefined;
     const companyId = request.query.companyId as string | undefined;
 
-    console.log(request.params);
     if (!userId || !companyId)
       throw new AppError("userId and companyId is required", 400);
 

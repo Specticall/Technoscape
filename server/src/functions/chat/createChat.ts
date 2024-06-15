@@ -14,7 +14,7 @@ export const createChat: RequestHandler = async (request, response, next) => {
     // 2. Bikin request query di db
     const userRequest = await prisma.requestQuery.create({
       data: {
-        comment: reqMessage,
+        message: reqMessage,
         companyId,
         dateCreated: new Date(),
       },

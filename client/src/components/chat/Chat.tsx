@@ -1,30 +1,47 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useRef } from "react";
 import useChatQuery from "../../service/useChatQuery";
 import { ScrollArea } from "../general.tsx/ScrollArea";
 import ChatAI from "./ChatAI";
 import ChatInput from "./ChatInput";
 import ChatUser from "./ChatUser";
+import { RequestChat, ResponseChat } from "../../utils/types";
+import useScrollTo from "../../hooks/useScrollTo";
+import useRegenerateMutation from "../../service/useRegenerateMutation";
+
+function isAIChat(
+  chatInput: ResponseChat | RequestChat
+): chatInput is ResponseChat {
+  return "tone" in chatInput;
+}
 
 export default function Chat() {
   const { chatData } = useChatQuery();
-  const scrollAreaRef = useRef<null | HTMLElement>(null);
+  // const chatMutation = useChatMutation();
+  const regenerateMutation = useRegenerateMutation();
+  const scrollAreaRef = useRef<null | HTMLDivElement>(null);
 
-  const scrollToBottom = useCallback(() => {
-    if (!scrollAreaRef.current) return;
+  const scrollToBottom = useScrollTo({ scrollAreaRef }, [chatData]);
 
-    const scrollElement = scrollAreaRef.current.querySelector("div>div");
+  const chatLength = chatData.length;
 
-    if (!scrollElement) return;
+  const handleRegenerate = (responseId: string) => {
+    // Find the latest user chat
+    let userChat: RequestChat;
+    for (let i = chatLength - 1; i >= 0; i--) {
+      if (!isAIChat(chatData[i])) {
+        userChat = chatData[i];
+        break;
+      }
+    }
 
-    scrollElement.scrollTo({
-      top: scrollElement.scrollHeight,
-      behavior: "smooth",
-    });
-  }, []);
+    // huhhh
+    if (!userChat!)
+      throw new Error(
+        "The latest user chat was not found while trying to regenerate"
+      );
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [chatData, scrollToBottom]);
+    regenerateMutation.mutate({ requestId: userChat.id, responseId });
+  };
 
   return (
     <div className="flex flex-col p-6">
@@ -33,18 +50,24 @@ export default function Chat() {
           className="h-0 min-h-full flex flex-col chat-scroll-container"
           ref={scrollAreaRef}
         >
-          {chatData?.map((chat) => {
-            if (chat?.tone) {
-              return <ChatAI message={chat.message} topic={chat.topic} />;
+          {chatData?.map((chat, i) => {
+            if (isAIChat(chat)) {
+              const canRegenerate =
+                i === chatLength - 1 || i === chatLength - 2;
+              return (
+                <ChatAI
+                  key={`${chat.id}-${chat.dateCreated}`}
+                  onRegenerate={handleRegenerate}
+                  canRegenerate={canRegenerate}
+                  message={chat.message}
+                  topic={chat.topic}
+                  id={chat.id}
+                />
+              );
             }
 
-            return <ChatUser message={chat.comment} />;
+            return <ChatUser message={chat.message} />;
           })}
-          {/* <ChatAI />
-          <ChatUser />
-          <ChatUser />
-          <ChatUser />
-          <ChatUser /> */}
         </ScrollArea>
       </div>
       <ChatInput onSendChat={scrollToBottom} />

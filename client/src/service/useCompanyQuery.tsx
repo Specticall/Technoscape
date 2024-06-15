@@ -3,7 +3,7 @@ import axios from "axios";
 import { BASE_URL, token, userId } from "../utils/config";
 import { SuccessResponse } from "../utils/types";
 
-type Company = {
+export type Company = {
   id: string;
   name: string;
   userId: string;

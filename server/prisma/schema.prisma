@@ -33,19 +33,20 @@ model User{
 model Company {
   id       String    @id @default(auto()) @map("_id") @db.ObjectId
   name     String    @unique
-  author   User      @relation(fields: [userId], references: [id])
+  user   User      @relation(fields: [userId], references: [id])
   userId   String    @db.ObjectId
   requests RequestQuery[]
   responses ResponseQuery[]
 
   starred Boolean 
   archived Boolean
+  latestChatDate DateTime?
 }
 
 // request query
 model RequestQuery {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  comment   String
+  message   String
   company   Company @relation(fields: [companyId], references: [id])
   companyId String  @db.ObjectId
   dateCreated DateTime
@@ -84,7 +85,7 @@ model Statistics {
 
 enum Topics {
   Services
-  Productsp
+  Products
   Technical
   Billing
   Complaints

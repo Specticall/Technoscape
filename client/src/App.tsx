@@ -7,28 +7,34 @@ import {
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import AppLayout from "./pages/AppLayout";
+import ContextPool from "./components/general.tsx/ContextPool";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Navigate to="/app/dashboard" />,
-  },
-  {
-    path: "/app",
-    element: <AppLayout />,
+    element: <ContextPool />,
     children: [
       {
-        path: "dashboard/:filters?",
-        element: <Dashboard />,
+        path: "/",
+        element: <Navigate to="/app/dashboard" />,
+      },
+      {
+        path: "/app",
+        element: <AppLayout />,
+        children: [
+          {
+            path: "dashboard/:filters?",
+            element: <Dashboard />,
+          },
+        ],
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
+  }
 ]);
 
 export default function App() {

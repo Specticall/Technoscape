@@ -22,6 +22,7 @@ export const createCompany: RequestHandler = async (
         name: companyName,
         starred: false,
         archived: false,
+        latestChatDate: new Date(0),
       },
     });
 
