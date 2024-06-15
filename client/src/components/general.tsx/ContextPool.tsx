@@ -3,6 +3,7 @@ import { CompanyProvider } from "../../context/CompanyContext";
 import { Outlet } from "react-router-dom";
 import { DialogComponents, DialogProvider } from "./Dialog";
 import NewCompany from "../Dialog/NewCompany";
+import ForgotPassword from "../Dialog/ForgotPassword";
 
 const dialog: DialogComponents = [
   {
@@ -12,6 +13,13 @@ const dialog: DialogComponents = [
       collapseWhenClickOutside: true,
     },
   },
+  {
+    name: "forgotPassword",
+    component: <ForgotPassword/>,
+    options: {
+      collapseWhenClickOutside: true,
+    },
+  }
 ];
 
 export default function ContextPool() {

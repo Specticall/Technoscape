@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import AppLayout from "./pages/AppLayout";
 import ContextPool from "./components/general.tsx/ContextPool";
+import Statistics from "./pages/Statistics";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
           {
             path: "dashboard/:filters?",
             element: <Dashboard />,
+          },
+          {
+            path: "statistics",
+            element: <Statistics />,
           },
         ],
       },

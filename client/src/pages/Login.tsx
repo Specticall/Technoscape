@@ -1,13 +1,16 @@
-import "./../styles/Login.css";
 import Icons from "../components/Icons";
 import Mascot from "./Mascot";
 import { BASE_URL, token } from "../utils/config";
 import axios from "axios";
+import { useState } from "react";
+import { useDialog } from "../components/general.tsx/Dialog";
+import "./../styles/Login.css";
 
 export default function Login() {
   const [email] = useState<string>("");
   const [password] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const { showDialog, closeDialog } = useDialog();
 
   const checkLogin = async (email: string, password: string) => {
     return axios.post(
@@ -73,9 +76,9 @@ export default function Login() {
                 <input type="checkbox" className="rem-check" />
                 <h5>Remember me</h5>
               </span>
-              <span>
-                <a href="/">Forgot Password</a>
-              </span>
+              <div className="forgot" onClick={() => {
+                showDialog("forgotPassword")
+              }}>Forgot Password</div>
             </div>
             <button>
               Login
@@ -83,6 +86,18 @@ export default function Login() {
             </button>
           </form>
         </div>
+      </div>
+      <div className="gradient1">
+        <Icons icon="gradient1"></Icons>
+      </div>
+      <div className="gradient2">
+        <Icons icon="gradient2"></Icons>
+      </div>
+      <div className="eclipse1">
+        <Icons icon="eclipse"></Icons>
+      </div>
+      <div className="eclipse2">
+        <Icons icon="eclipse"></Icons>
       </div>
     </div>
   );
