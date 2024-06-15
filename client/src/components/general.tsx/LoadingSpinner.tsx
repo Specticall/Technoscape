@@ -1,4 +1,5 @@
 import { VariantProps, cva } from "class-variance-authority";
+import { cn } from "../../utils/helper";
 
 const styles = cva(
   //////// Your stlyes goes here ///////
@@ -22,8 +23,13 @@ const styles = cva(
 //////// Prop Types /////////
 type Props = {
   size: VariantProps<typeof styles>["size"];
+  className?: string;
 } & React.HTMLAttributes<HTMLSpanElement>;
 
-export default function LoadingSpinner({ size = "sm", ...props }: Props) {
-  return <span {...props} className={styles({ size })}></span>;
+export default function LoadingSpinner({
+  size = "sm",
+  className,
+  ...props
+}: Props) {
+  return <span {...props} className={cn(styles({ size }), className)}></span>;
 }
