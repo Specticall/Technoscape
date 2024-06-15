@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "./../styles/Login.css";
 import Icons from "../components/Icons";
 import Mascot from "./Mascot";
