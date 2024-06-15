@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
 import AppLayout from "./pages/AppLayout";
 
 const queryClient = new QueryClient();
@@ -29,10 +28,6 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
   },
 ]);
 
