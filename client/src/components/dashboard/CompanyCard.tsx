@@ -16,7 +16,7 @@ export default function CompanyCard({
     <article
       {...props}
       className={cn(
-        "p-4 gap-x-4 grid grid-cols-[auto_1fr] rounded-md",
+        "p-4 gap-x-4 grid grid-cols-[auto_1fr] rounded-md hover:bg-slate-50 transition-all duration-200 cursor-pointer",
         highlighted && "bg-slate-100"
       )}
     >

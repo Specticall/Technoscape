@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Icons from "../Icons";
 import Button from "../general.tsx/Button";
 import { Icon } from "@iconify/react";
@@ -37,7 +37,10 @@ export default function ChatAI({
         <div className="grid grid-cols-[1fr_auto] gap-x-6 flex-1">
           <div className="flex flex-col gap-8 items-start">
             {isLoading ? (
-              <LoadingSpinner size={"lg"} />
+              <div className="w-full h-full flex items-center justify-center gap-4 pt-6">
+                <LoadingSpinner size={"md"} />
+                <p className="text-slate-200">Regenerating Responses</p>
+              </div>
             ) : (
               <p className="font-[400] text-gray-100 leading-[175%] ">
                 {message}
@@ -48,10 +51,10 @@ export default function ChatAI({
                 variant="secondary"
                 className="flex items-center justify-center gap-2"
                 onClick={() => {
-                  console.log("REGENERATING");
                   onRegenerate(id);
                   setIsLoading(true);
                 }}
+                disabled={isLoading}
               >
                 <Icon icon="mingcute:flash-fill" />
                 Regenerate
