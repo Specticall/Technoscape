@@ -20,11 +20,11 @@ export default function ContextPool() {
   return (
     <CompanyProvider>
       <AuthProvider>
-        <DialogProvider components={dialog}>
-          <PopupProvider>
+        <PopupProvider>
+          <DialogProvider components={dialog}>
             <Outlet />
-          </PopupProvider>
-        </DialogProvider>
+          </DialogProvider>
+        </PopupProvider>
       </AuthProvider>
     </CompanyProvider>
   );

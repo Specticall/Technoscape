@@ -67,18 +67,8 @@ export default function useChatMutation() {
       // Return a context with the previous and new todo
       return { previousMessage, optimisticChat };
     },
-    onError: (err, newTodo, context) => {
-      console.log("error", err);
-      queryClient.setQueryData([
-        "chat",
-        userId,
 
-        selectedCompany?.id,
-        context?.previousMessage,
-      ]);
-    },
     onSuccess: (data) => {
-      console.log("SUCCESS");
       queryClient.invalidateQueries({
         queryKey: ["chat", userId, selectedCompany?.id],
       });

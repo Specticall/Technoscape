@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { BASE_URL, token, userId } from "../utils/config";
+import { usePopup } from "../components/general.tsx/Popup";
 
 const createCompany =
   (userId: string) =>
@@ -20,7 +21,7 @@ const createCompany =
   };
 
 const deleteCompany = ({ companyId }: { companyId: string }) => {
-  return axios.delete(`${BASE_URL}/company?id=${companyId}`, {
+  return axios.delete(`${BASE_URL}/company?companyId=${companyId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -29,6 +30,7 @@ const deleteCompany = ({ companyId }: { companyId: string }) => {
 
 export default function useCompanyMutation() {
   const queryClient = useQueryClient();
+  const { notify } = usePopup();
 
   const createMutation = useMutation({
     mutationFn: createCompany(userId),
@@ -36,7 +38,6 @@ export default function useCompanyMutation() {
       console.log("CREATE COMPANY ERROR");
     },
     onSuccess() {
-      console.log("SUCCESS");
       queryClient.invalidateQueries({ queryKey: ["company", userId] });
     },
   });
@@ -45,6 +46,7 @@ export default function useCompanyMutation() {
     mutationFn: deleteCompany,
     onError: () => {},
     onSuccess: () => {
+      notify("Company Deleted");
       queryClient.invalidateQueries({ queryKey: ["company", userId] });
     },
   });

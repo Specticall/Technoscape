@@ -16,9 +16,24 @@ export const delCompany: RequestHandler = async (request, response, next) => {
     });
     if (!checkExist) throw new AppError("Company not found", 402);
 
-    await prisma.company.delete({
-      where: { id: companyId },
+    await prisma.$transaction(async (prisma) => {
+      await prisma.requestQuery.deleteMany({
+        where: {
+          companyId,
+        },
+      });
+
+      await prisma.responseQuery.deleteMany({
+        where: {
+          companyId,
+        },
+      });
+
+      await prisma.company.delete({
+        where: { id: companyId },
+      });
     });
+
     response.status(200).json({
       message: "Success Delete",
     });
