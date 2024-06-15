@@ -28,15 +28,15 @@ const router = createBrowserRouter([
             path: "dashboard/:filters?",
             element: <Dashboard />,
           },
+          {
+            path: "statistics",
+            element: <Statistics />,
+          },
         ],
       },
       {
         path: "/login",
         element: <Login />,
-      },
-      {
-        path: "/statistics",
-        element: <Statistics />,
       },
     ],
   },

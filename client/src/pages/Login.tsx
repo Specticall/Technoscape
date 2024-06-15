@@ -4,6 +4,7 @@ import Mascot from "./Mascot";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "../components/general.tsx/Button";
 import useLogin from "../service/useLogin";
+import Icons from "../components/Icons";
 
 type FieldValues = {
   email: string;
@@ -17,7 +18,6 @@ export default function Login() {
     formState: { errors },
   } = useForm<FieldValues>();
   const loginMutation = useLogin();
-
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit: SubmitHandler<FieldValues> = (value) => {
@@ -59,9 +59,14 @@ export default function Login() {
                 <input type="checkbox" className="rem-check" />
                 <h5>Remember me</h5>
               </span>
-              <span>
-                <a href="/">Forgot Password</a>
-              </span>
+              <div
+                className="forgot"
+                onClick={() => {
+                  showDialog("forgotPassword");
+                }}
+              >
+                Forgot Password
+              </div>
             </div>
             <Button disabled={isLoading}>
               Login
@@ -70,6 +75,18 @@ export default function Login() {
           </form>
         </div>
       </div>
+      {/* <div className="gradient1">
+        <Icons icon="gradient1"></Icons>
+      </div>
+      <div className="gradient2">
+        <Icons icon="gradient2"></Icons>
+      </div>
+      <div className="eclipse1">
+        <Icons icon="eclipse"></Icons>
+      </div>
+      <div className="eclipse2">
+        <Icons icon="eclipse"></Icons>
+      </div> */}
     </div>
   );
 }

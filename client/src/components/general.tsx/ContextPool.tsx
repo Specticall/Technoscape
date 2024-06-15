@@ -5,11 +5,19 @@ import { DialogComponents, DialogProvider } from "./Dialog";
 import NewCompany from "../Dialog/NewCompany";
 import PopupProvider from "./Popup";
 import { AuthProvider } from "../../context/AuthContext";
+import ForgotPassword from "../Dialog/ForgotPassword";
 
 const dialog: DialogComponents = [
   {
     name: "newCompany",
     component: <NewCompany />,
+    options: {
+      collapseWhenClickOutside: true,
+    },
+  },
+  {
+    name: "forgotPassword",
+    component: <ForgotPassword />,
     options: {
       collapseWhenClickOutside: true,
     },

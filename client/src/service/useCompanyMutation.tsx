@@ -28,6 +28,14 @@ const deleteCompany = ({ companyId }: { companyId: string }) => {
   });
 };
 
+const toggleCompanyStar = ({ companyId }: { companyId: string }) => {
+  return axios.put(`${BASE_URL}/company?companyId=${companyId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export default function useCompanyMutation() {
   const queryClient = useQueryClient();
   const { notify } = usePopup();

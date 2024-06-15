@@ -17,8 +17,8 @@ const navbarList = [
     route: "/app/dashboard/archived",
   },
   {
-    icon: <i className="bx bx-history"></i>,
-    route: "/app/dashboard/history",
+    icon: <i className="bx bx-bar-chart-alt-2"></i>,
+    route: "/app/statistics",
   },
 ];
 
