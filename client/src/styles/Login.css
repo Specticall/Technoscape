@@ -1,0 +1,161 @@
+.content {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  /* background-color: antiquewhite; */
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+  width: 80%;
+  margin: 0 auto;
+  gap: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+  width: 30vw;
+}
+
+.logo-section h1 {
+  font-weight: 700;
+  font-size: 2.4rem;
+  text-align: center;
+  color: #252aa1;
+}
+
+.form-section {
+  /* border: 3px solid gray; */
+  box-shadow: rgb(191, 188, 231) 1px 4px 13px;
+  border-radius: 10px;
+  /* background-color: aqua; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 2.2rem;
+  padding: 3rem 4rem;
+}
+
+.title h2 {
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: #252aa1;
+}
+
+.awok {
+  color: #252aa1;
+  background-color: #252aa1;
+  height: 2px;
+  margin: 0;
+  border: none;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  width: 45vw;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.form-group label {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.form-group input {
+  width: 100%;
+  height: 3.7rem;
+  border: solid #2529a11b 1px;
+  background-color: #f2f2ff;
+  border-radius: 10px;
+  padding: 0 1rem;
+  font-size: 1rem;
+}
+
+.form-group input:focus-visible {
+  outline: none;
+}
+
+.rem-for {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.rem h5 {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.rem-check {
+  border: 1px solid #cacece;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.rem-input:checked {
+  background-color: rgb(171, 42, 42);
+}
+
+.rem-for a {
+  color: #252aa1;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.form-login button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 11rem;
+  background-color: #5157e6;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: white;
+  padding: 0.7vw 0;
+  gap: 10px;
+  transition: all 0.15s;
+}
+
+.form-login button:hover {
+  opacity: 0.9;
+}
+
+.form-login button:active {
+  opacity: 0.7;
+}
+
+.form-login img {
+  width: 2rem;
+}

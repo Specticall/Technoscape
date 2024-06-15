@@ -9,7 +9,8 @@ const styles = cva("cursor-pointer transition-all duration-200", {
       primary: "",
       secondary:
         "bg-white text-slate-800 px-12 py-2 rounded-md    font-semibold hover:opacity-80 transition-all duration-200",
-      tertiary: "",
+      tertiary:
+        "bg-black px-8 py-2 rounded-md text-white hover:opacity-80 transition-all duration-200",
     },
   },
 });
