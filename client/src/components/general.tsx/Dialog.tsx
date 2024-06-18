@@ -25,6 +25,7 @@ type TDialogContextValues = {
   showDialog: (dialogName: string, context?: unknown) => void;
   closeDialog: (options?: { persistBackground?: boolean }) => Promise<void>;
   contextData?: unknown;
+  isShowing: boolean;
 };
 const DialogContext = createContext<TDialogContextValues | null>(null);
 
@@ -104,6 +105,8 @@ export function DialogProvider({
 
   // Close the dialog when the user clicks outside.
   const handleClickOutside = (e: MouseEvent) => {
+    e.stopPropagation();
+
     // Disable the click outside functionality (if requested). This means that the user now needs to use the <DialogCollapse/> component to close the dialog.
     if (options && !options.collapseWhenClickOutside) return;
 
@@ -126,7 +129,14 @@ export function DialogProvider({
   };
 
   return (
-    <DialogContext.Provider value={{ showDialog, closeDialog, contextData }}>
+    <DialogContext.Provider
+      value={{
+        showDialog,
+        closeDialog,
+        contextData,
+        isShowing: Boolean(isShowing.selectedComponent),
+      }}
+    >
       <div
         className={cn(
           "fixed inset-0 z-10 opacity-0 invisible bg-black/50 transition-all duration-400 flex items-center justify-center",
@@ -138,7 +148,7 @@ export function DialogProvider({
             `dialog-content invisible scale-90 transition-all opacity-0 z-20 grid place-items-center min-h-full absolute inset-0`,
             isShowing.selectedComponent && "opacity-1 visible scale-1"
           )}
-          onClick={handleClickOutside}
+          onMouseDown={handleClickOutside}
           ref={wrapperRef}
         >
           {isShowing.selectedComponent}

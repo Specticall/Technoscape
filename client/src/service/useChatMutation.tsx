@@ -1,27 +1,15 @@
-import {
-  UseQueryResult,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
-import axios, { AxiosResponse } from "axios";
-import { BASE_URL, token, userId } from "../utils/config";
-import useChatQuery from "./useChatQuery";
-import { ChatResponse, RequestChat } from "../utils/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
+import { userId } from "../utils/config";
+import { ChatResponse, UserMessage } from "../utils/types";
 import { useCompany } from "../context/CompanyContext";
+import { API } from "./Auth/API";
 
 const mutationFn = (companyId: string) => (message: string) => {
-  return axios.post(
-    `${BASE_URL}/chat`,
-    {
-      reqMessage: message,
-      companyId,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  return API.post(`/chat`, {
+    requestMessage: message,
+    companyId,
+  });
 };
 
 export default function useChatMutation() {
@@ -45,7 +33,7 @@ export default function useChatMutation() {
         selectedCompany?.id,
       ]);
 
-      const optimisticChat: RequestChat = {
+      const optimisticChat: UserMessage = {
         message,
         dateCreated: new Date().toDateString(),
         companyId: Math.random().toString(),

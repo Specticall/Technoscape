@@ -5,51 +5,44 @@ import { createResponse } from "../ai/createResponse";
 
 const prisma = new PrismaClient();
 
+/*
+ * Regenerate the most recent chat from a specified company
+ */
 export const updateChat: RequestHandler = async (request, response, next) => {
   try {
-    const { requestId, responseId } = request.body;
+    const { messageId, responseId } = request.body;
 
-    if (!requestId || !responseId) {
-      throw new AppError("chatid and messageId is  required", 401);
-    }
-    const lastRequest = await prisma.requestQuery.findUnique({
-      where: { id: requestId },
-    });
-
-    if (!lastRequest) {
-      throw new AppError("theres no lastRequest", 401);
+    if (!messageId || !responseId) {
+      throw new AppError(
+        "messageId and responseId is missing on the request body",
+        400
+      );
     }
 
-    const lastRequestMessage = lastRequest.message;
-
-    const lastResponse = await prisma.responseQuery.findUnique({
-      where: { id: responseId },
+    // 1. Find the most recent chat sent by the user (atm, we're recieving the recent message id from the frontend)
+    const mostRecentMessage = await prisma.userMessage.findUnique({
+      where: { id: messageId },
     });
 
-    if (!lastResponse) {
+    if (!mostRecentMessage) {
       throw new AppError("there's no last message", 401);
     }
 
-    const newResponse = await createResponse({
-      input: lastRequestMessage,
+    //2. Regenerate the AI response
+    const regeneratedResponse = await createResponse({
+      input: mostRecentMessage.message,
     });
 
-    const updatedData = await prisma.responseQuery.update({
+    //3. Save the updated data on the database
+    const updatedData = await prisma.responseAI.update({
       where: { id: responseId },
       data: {
-        message: newResponse.completeResponse?.response,
-        tone: Number(newResponse.completeResponse?.stats.sentiment),
-        topic: newResponse.completeResponse?.stats.topic,
-        urgency: Number(newResponse.completeResponse?.stats.urgency),
+        message: regeneratedResponse.completeResponse?.response,
+        tone: Number(regeneratedResponse.completeResponse?.stats.sentiment),
+        topic: regeneratedResponse.completeResponse?.stats.topic,
+        urgency: Number(regeneratedResponse.completeResponse?.stats.urgency),
         dateCreated: new Date(),
       },
-    });
-
-    console.log({
-      message: newResponse.completeResponse?.response,
-      tone: newResponse.completeResponse?.stats.sentiment,
-      topic: newResponse.completeResponse?.stats.topic,
-      urgency: newResponse.completeResponse?.stats.urgency,
     });
 
     response.status(200).send({

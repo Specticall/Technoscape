@@ -1,5 +1,3 @@
-import { SuccessResponse, ResponseChat, RequestChat } from "./types";
-
 export type SuccessResponse<T> = {
   status: number;
   data: T;
@@ -9,14 +7,14 @@ export type ErrorResponse = {
   status: number;
   message: string;
 };
-export type RequestChat = {
+export type UserMessage = {
   id: string;
   message: string;
   companyId: string;
   dateCreated: string;
 };
 
-export type ResponseChat = {
+export type AIResponse = {
   id: string;
   message: string;
   companyId: string;
@@ -25,4 +23,5 @@ export type ResponseChat = {
   topic: string;
   urgency: number;
 };
-export type ChatResponse = SuccessResponse<(ResponseChat | RequestChat)[]>;
+
+export type ChatResponse = SuccessResponse<(AIResponse | UserMessage)[]>;

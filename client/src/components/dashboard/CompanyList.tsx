@@ -14,6 +14,7 @@ export default function CompanyList() {
           {companyData?.map((company) => {
             return (
               <CompanyCard
+                key={company.id}
                 highlighted={
                   selectedCompany && selectedCompany.id === company.id
                 }

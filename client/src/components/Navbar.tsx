@@ -36,6 +36,7 @@ export default function Navbar() {
           const isSelected = pathname === navbar.route;
           return (
             <li
+              key={navbar.route}
               className={cn(
                 "[&>i]:text-3xl cursor-pointer w-[4rem] flex items-center justify-center py-3 relative [&>i]:transition-all [&>i]:duration-200 transition-all duration-200 hover:[&>i]:opacity-30 [&>i]:text-slate-900",
                 isSelected && "bg-white"

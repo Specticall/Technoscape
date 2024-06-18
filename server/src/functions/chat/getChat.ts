@@ -3,6 +3,11 @@ import { PrismaClient } from "@prisma/client";
 import { AppError } from "../../utils/AppError";
 
 const prisma = new PrismaClient();
+
+/**
+ * Request a user
+ *
+ */
 export const getChat: RequestHandler = async (request, response, next) => {
   try {
     const userId = request.query.userId as string | undefined;
@@ -11,22 +16,26 @@ export const getChat: RequestHandler = async (request, response, next) => {
     if (!userId || !companyId)
       throw new AppError("userId and companyId is required", 400);
 
-    const requestQueryData = await prisma.requestQuery.findMany({
+    const userMessageList = await prisma.userMessage.findMany({
       where: {
         companyId,
       },
     });
 
-    const responseQueryData = await prisma.responseQuery.findMany({
+    const AIResponseList = await prisma.responseAI.findMany({
       where: {
         companyId,
       },
     });
 
-    const sortedChat = [...responseQueryData, ...requestQueryData].sort(
-      (a, b) =>
-        new Date(a.dateCreated).getTime() - new Date(b.dateCreated).getTime()
-    );
+    // Combine both chat and sort by the newest one
+    // NOTE : Probably going to paginate this if the chat gets long
+    const sortedChat = userMessageList
+      .concat(AIResponseList)
+      .sort(
+        (a, b) =>
+          new Date(a.dateCreated).getTime() - new Date(b.dateCreated).getTime()
+      );
 
     response.status(200).send({
       status: "success",

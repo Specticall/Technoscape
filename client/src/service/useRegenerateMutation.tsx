@@ -1,33 +1,22 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { BASE_URL, token, userId } from "../utils/config";
-import { useCompany } from "../context/CompanyContext";
-import { useAuth } from "../context/AuthContext";
+import { userId } from "../utils/config";
+import { API } from "./Auth/API";
 
 const mutationFn = ({
-  requestId,
+  messageId,
   responseId,
 }: {
-  requestId?: string;
+  messageId?: string;
   responseId?: string;
 }) => {
-  return axios.put(
-    `${BASE_URL}/chat/regenerate`,
-    {
-      requestId,
-      responseId,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  return API.put(`/chat/regenerate`, {
+    messageId,
+    responseId,
+  });
 };
 
 export default function useRegenerateMutation() {
   const queryClient = useQueryClient();
-  const { token } = useAuth();
 
   const regenerateMutation = useMutation({
     mutationFn,
@@ -37,7 +26,7 @@ export default function useRegenerateMutation() {
     onError: (err) => {
       console.log("error", err);
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       console.log("SUCCESS");
       queryClient.invalidateQueries({
         queryKey: ["chat", userId],

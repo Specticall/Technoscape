@@ -10,12 +10,12 @@ export default function SearchNavigator() {
         <p>Newest</p>
         <i className="bx bxs-chevron-down"></i>
       </div>
-      <p className="flex items-center gap-2 text-gray-600">
-        <div className="bg-gray-100 px-[4px] rounded-sm">
+      <div className="flex items-center gap-2 text-gray-600">
+        <p className="bg-gray-100 px-[4px] rounded-sm">
           {companyData?.length || 0}
-        </div>
+        </p>
         Companies
-      </p>
+      </div>
     </div>
   );
 }

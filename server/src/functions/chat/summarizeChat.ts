@@ -13,15 +13,23 @@ export const summarizeChat: RequestHandler = async (
   try {
     const requestId = request.body;
     if (!requestId) throw new AppError("requestId required!", 401);
-    const requestMessage = await prisma.requestQuery.findUnique({
+    const userMessage = await prisma.userMessage.findUnique({
       where: {
         id: requestId,
       },
     });
-    const themessage = requestMessage?.message;
+
+    const message = userMessage?.message;
+    if (!message)
+      throw new AppError(
+        "Something went wrong, our server wasn't able to propery process your message",
+        500
+      );
+
     const summarized = summarize({
-      input: String(themessage),
+      input: message,
     });
+
     response.status(200).send({
       status: "success",
       data: summarized,

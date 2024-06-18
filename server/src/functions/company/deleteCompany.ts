@@ -4,26 +4,34 @@ import { AppError } from "../../utils/AppError";
 
 const prisma = new PrismaClient();
 
-export const delCompany: RequestHandler = async (request, response, next) => {
+export const deleteCompany: RequestHandler = async (
+  request,
+  response,
+  next
+) => {
   try {
     const companyId = request.query.companyId as string;
     if (!companyId) {
-      throw new AppError("Company ID required", 402);
+      throw new AppError("companyId missing in the request query", 400);
     }
 
-    const checkExist = await prisma.company.findUnique({
+    // Make sure the company exists before deleting from the database
+    const companyExists = await prisma.company.findUnique({
       where: { id: companyId },
     });
-    if (!checkExist) throw new AppError("Company not found", 402);
 
+    if (!companyExists)
+      throw new AppError(`Company with the id ${companyId} is not found`, 400);
+
+    // We're deleting all the messages and response before deleting the actual company
     await prisma.$transaction(async (prisma) => {
-      await prisma.requestQuery.deleteMany({
+      await prisma.userMessage.deleteMany({
         where: {
           companyId,
         },
       });
 
-      await prisma.responseQuery.deleteMany({
+      await prisma.responseAI.deleteMany({
         where: {
           companyId,
         },
@@ -35,7 +43,8 @@ export const delCompany: RequestHandler = async (request, response, next) => {
     });
 
     response.status(200).json({
-      message: "Success Delete",
+      status: "success",
+      data: null,
     });
   } catch (error) {
     next(error);

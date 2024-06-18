@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { BASE_URL, token, userId } from "../utils/config";
+import { userId } from "../utils/config";
 import { SuccessResponse } from "../utils/types";
+import { API } from "./Auth/API";
 
 export type Company = {
   id: string;
@@ -13,16 +13,8 @@ export type Company = {
 
 export default function useCompanyQuery() {
   const companyQuery = useQuery({
-    queryFn: () => {
-      return axios.get<SuccessResponse<Company[]>>(
-        `${BASE_URL}/company?userId=${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-    },
+    queryFn: () =>
+      API.get<SuccessResponse<Company[]>>(`/company?userId=${userId}`),
     queryKey: ["company", userId],
   });
 

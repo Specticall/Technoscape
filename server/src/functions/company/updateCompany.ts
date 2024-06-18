@@ -16,13 +16,13 @@ export const updateCompany: RequestHandler = async (
       throw new AppError("Name and userId required", 402);
     }
 
-    const updatedCompany = await prisma.company.update({
-        where: {
-            id: companyId as string,
-        },
-        data: {
-            starred: request.body.starred,
-            archived: request.body.archived,
+    await prisma.company.update({
+      where: {
+        id: companyId as string,
+      },
+      data: {
+        starred: request.body.starred,
+        archived: request.body.archived,
       },
     });
 

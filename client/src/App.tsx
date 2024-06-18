@@ -10,6 +10,8 @@ import AppLayout from "./pages/AppLayout";
 import Statistics from "./pages/Statistics";
 import ContextPool from "./components/general.tsx/ContextPool";
 
+import "react-loading-skeleton/dist/skeleton.css";
+
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([

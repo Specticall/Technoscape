@@ -1,6 +1,5 @@
 import { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
-import { Prisma } from "@prisma/client";
 import { AppError } from "../../utils/AppError";
 
 export const protect: RequestHandler = async (request, response, next) => {

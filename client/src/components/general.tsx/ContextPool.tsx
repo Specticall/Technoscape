@@ -1,4 +1,3 @@
-import { PropsWithChildren } from "react";
 import { CompanyProvider } from "../../context/CompanyContext";
 import { Outlet } from "react-router-dom";
 import { DialogComponents, DialogProvider } from "./Dialog";
@@ -6,6 +5,8 @@ import NewCompany from "../Dialog/NewCompany";
 import PopupProvider from "./Popup";
 import { AuthProvider } from "../../context/AuthContext";
 import ForgotPassword from "../Dialog/ForgotPassword";
+import ActionLanguageDialog from "../action/action-dialog/language/ActionLanguageDialog";
+import { ActionProvider } from "../../context/ActionContext";
 
 const dialog: DialogComponents = [
   {
@@ -22,6 +23,13 @@ const dialog: DialogComponents = [
       collapseWhenClickOutside: true,
     },
   },
+  {
+    name: "action-language",
+    component: <ActionLanguageDialog />,
+    options: {
+      collapseWhenClickOutside: true,
+    },
+  },
 ];
 
 export default function ContextPool() {
@@ -29,9 +37,11 @@ export default function ContextPool() {
     <CompanyProvider>
       <AuthProvider>
         <PopupProvider>
-          <DialogProvider components={dialog}>
-            <Outlet />
-          </DialogProvider>
+          <ActionProvider>
+            <DialogProvider components={dialog}>
+              <Outlet />
+            </DialogProvider>
+          </ActionProvider>
         </PopupProvider>
       </AuthProvider>
     </CompanyProvider>

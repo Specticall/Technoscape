@@ -5,17 +5,20 @@ import { translate } from "../ai/translate";
 
 const prisma = new PrismaClient();
 
+// TODO : RERW
 export const translateChat: RequestHandler = async (
   request,
   response,
   next
 ) => {
   try {
+    throw new AppError("THIS ROUTE NEEDS REWRITE", 500);
+
     const requestId = request.body;
     const toBahasa = request.body;
     if (!requestId) throw new AppError("requestId required!", 401);
     if (!toBahasa) throw new AppError("translate to language needed!", 401);
-    const requestMessage = await prisma.requestQuery.findUnique({
+    const requestMessage = await prisma.userMessage.findUnique({
       where: {
         id: requestId,
       },
